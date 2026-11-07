@@ -1,0 +1,17 @@
+###
+POST http://localhost:8080/api/usuarios/registro
+Content-Type: application/json
+
+{
+  "email": "prueba3@test.cl",
+  "password": "123456",
+  "nombre": "Javier",
+  "apellido": "Calabrano",
+  "telefono": "954249303",
+  "direccion": "Las acacias 2758",
+  "rol": "ADMIN",
+  "mascotas": [],
+  "ventas": [],
+  "recompensas": [],
+  "notificaciones": []
+}
