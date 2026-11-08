@@ -4,6 +4,7 @@ import com.petsalud.backendpetsalud.entity.Mascota;
 import com.petsalud.backendpetsalud.service.MascotaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class MascotaController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or @securityRules.isMascotaOwner(#id, authentication)")
     public ResponseEntity<Mascota> obtenerMascotaPorId(@PathVariable Long id) {
         return mascotaService.obtenerMascotaPorId(id)
                 .map(ResponseEntity::ok)
@@ -28,18 +30,21 @@ public class MascotaController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or @securityRules.isMascotaOwner(#id, authentication)")
     public ResponseEntity<Mascota> actualizarMascota(@PathVariable Long id, @RequestBody Mascota mascota) {
         Mascota mascotaActualizada = mascotaService.actualizarMascota(id, mascota);
         return ResponseEntity.ok(mascotaActualizada);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') or @securityRules.isMascotaOwner(#id, authentication)")
     public ResponseEntity<Void> eliminarMascota(@PathVariable Long id) {
         mascotaService.eliminarMascota(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/propietario/{propietarioId}")
+    @PreAuthorize("hasAuthority('ADMIN') or #propietarioId == authentication.principal.usuario.id")
     public ResponseEntity<List<Mascota>> listarMascotasPorPropietario(@PathVariable Long propietarioId) {
         List<Mascota> mascotas = mascotaService.listarMascotasPorPropietario(propietarioId);
         return ResponseEntity.ok(mascotas);

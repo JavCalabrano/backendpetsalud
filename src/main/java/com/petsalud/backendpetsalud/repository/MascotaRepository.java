@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface MascotaRepository extends JpaRepository<Mascota, Long> {
     List<Mascota> findByPropietarioId(Long propietarioId);
+    boolean existsByIdAndPropietarioId(Long id, Long propietarioId);
+
 }

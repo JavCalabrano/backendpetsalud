@@ -1,6 +1,7 @@
 package com.petsalud.backendpetsalud.security;
 
 import com.petsalud.backendpetsalud.entity.Usuario;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import java.util.Collections;
 import java.util.Collection;
 
 public class UsuarioDetails implements UserDetails {
+
 
     private final Usuario usuario;
 
@@ -29,6 +31,10 @@ public class UsuarioDetails implements UserDetails {
     @Override
     public String getUsername() {
         return usuario.getEmail();
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     @Override

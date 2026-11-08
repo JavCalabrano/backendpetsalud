@@ -1,4 +1,4 @@
-###
+### Registro de usuario 'ADMIN'
 POST http://localhost:8080/api/usuarios/registro
 Content-Type: application/json
 
@@ -15,3 +15,117 @@ Content-Type: application/json
   "recompensas": [],
   "notificaciones": []
 }
+
+### Registro de usuario 'CLIENTE'
+POST http://localhost:8080/api/usuarios/registro
+Content-Type: application/json
+
+{
+  "email": "prueba4@test.cl",
+  "password": "123456",
+  "nombre": "Alexandra",
+  "apellido": "Santos",
+  "telefono": "954249303",
+  "direccion": "Las acacias 2758",
+  "rol": "CLIENTE",
+  "mascotas": [],
+  "ventas": [],
+  "recompensas": [],
+  "notificaciones": []
+}
+
+### Registro de usuario 'VETERINARIO'
+POST http://localhost:8080/api/usuarios/registro
+Content-Type: application/json
+
+{
+  "email": "prueba1@test.cl",
+  "password": "123456",
+  "nombre": "Daniela",
+  "apellido": "Arancibia",
+  "telefono": "954249303",
+  "direccion": "Las acacias 2758",
+  "rol": "VETERINARIO",
+  "mascotas": [],
+  "ventas": [],
+  "recompensas": [],
+  "notificaciones": []
+}
+
+
+### Login de usuario
+POST http://localhost:8080/api/login
+Content-Type: application/json
+
+{
+  "email": "prueba4@test.cl",
+  "password": "123456"
+}
+
+> {% client.global.set("auth_token", response.body.token); %}
+
+### GET Usuarios (Requiere de Token)
+GET http://localhost:8080/api/usuarios
+Authorization: Bearer {{auth_token}}
+
+### GET Ventas (Requiere de Token)
+GET http://localhost:8080/api/ventas
+Authorization: Bearer {{auth_token}}
+
+
+### POST Ventas (Requiere 'ADMIN')
+POST http://localhost:8080/api/ventas?usuarioId=1
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+[
+  1,
+  2
+]
+
+### POST de Productos (Requiere 'ADMIN')
+POST http://localhost:8080/api/productos
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "nombre": "Comida gato",
+  "descripcion": "Comida con salmón",
+  "precio": 20000,
+  "stock": 15,
+  "categoria": "Alimento gato"
+}
+
+###
+POST http://localhost:8080/api/mascotas/propietario/4
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "nombre": "Juno",
+  "especie": "Perro",
+  "raza": "Peagle",
+  "fechaNacimiento": "2024-10-14",
+  "sexo": "Femenino"
+}
+
+###
+GET http://localhost:8080/api/mascotas/3
+Authorization: Bearer {{auth_token}}
+
+###
+PUT http://localhost:8080/api/mascotas/2
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "nombre": "Juno",
+  "especie": "Perro",
+  "raza": "Beagle",
+  "fechaNacimiento": "2024-10-14",
+  "sexo": "Masculino"
+}
+
+###
+DELETE http://localhost:8080/api/mascotas/2
+Authorization: Bearer {{auth_token}}

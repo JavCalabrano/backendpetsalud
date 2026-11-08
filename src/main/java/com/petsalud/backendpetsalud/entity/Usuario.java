@@ -1,5 +1,6 @@
 package com.petsalud.backendpetsalud.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,9 +40,11 @@ public class Usuario {
     private Rol rol;
 
     // Relaciones
+    @JsonIgnore
     @OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL)
     private List<Mascota> mascotas;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Venta> ventas;
 
